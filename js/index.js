@@ -14,38 +14,6 @@ let lastCrashId = " ";
 let delta = clock.getDelta();
 let moveDistance = 200 * delta;
 
-let o = new Orienter();
-o.onOrient = function (obj) {
-  console.log(obj.a, obj.b, obj.c)
-  if (-80 < obj.a < 0) {
-    if (movingCar.position.x > -270)
-      movingCar.position.x -= moveDistance;
-    if (camera.position.x > -150) {
-      camera.position.x -= moveDistance * 0.6;
-      if (camera.rotation.z > -5 * Math.PI / 180) {
-        camera.rotation.z -= 0.2 * Math.PI / 180;
-      }
-    }
-  }
-  if (0 < obj.a < 80) {
-    if (movingCar.position.x < 270)
-      movingCar.position.x += moveDistance;
-    if (camera.position.x < 150) {
-      camera.position.x += moveDistance * 0.6;
-      if (camera.rotation.z < 5 * Math.PI / 180) {
-        camera.rotation.z += 0.2 * Math.PI / 180;
-      }
-    }
-  }
-  if (-80 < obj.b < 0) {
-    movingCar.position.z += moveDistance;
-  }
-  if (0 < obj.b < 80) {
-    movingCar.position.z -= moveDistance;
-  }
-};
-o.on();
-
 init();
 animate();
 
