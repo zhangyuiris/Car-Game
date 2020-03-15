@@ -11,6 +11,13 @@ let id = 0;
 let score = 0;
 let crashId = " ";
 let lastCrashId = " ";
+let moving = 10;
+
+let leftBtn = document.querySelector('#left');
+let rightBtn = document.querySelector('#right');
+let topBtn = document.querySelector('#top');
+let bottomBtn = document.querySelector('#bottom');
+
 
 
 init();
@@ -72,6 +79,11 @@ function init() {
   
   // window resize
   window.addEventListener('resize', onWindowResize);
+  
+  leftBtn.addEventListener('click', onLeft);
+  rightBtn.addEventListener('click', onRight);
+  topBtn.addEventListener('click', onTop);
+  bottomBtn.addEventListener('click', onBottom);
 }
 
 function animate() {
@@ -374,4 +386,35 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   // 重新设置渲染器渲染范围
   renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function onLeft() {
+  let delta = clock.getDelta();
+  let moveDistance = 200 * delta;
+  if (movingCar.position.x > -270)
+    movingCar.position.x -= moveDistance;
+  if (camera.position.x > -150) {
+    camera.position.x -= moveDistance * 0.6;
+    if (camera.rotation.z > -5 * Math.PI / 180) {
+      camera.rotation.z -= 0.2 * Math.PI / 180;
+    }
+  }
+}
+function onRight() {
+  let delta = clock.getDelta();
+  let moveDistance = 200 * delta;
+  if (movingCar.position.x < 270)
+    movingCar.position.x += moveDistance;
+  if (camera.position.x < 150) {
+    camera.position.x += moveDistance * 0.6;
+    if (camera.rotation.z < 5 * Math.PI / 180) {
+      camera.rotation.z += 0.2 * Math.PI / 180;
+    }
+  }
+}
+function onTop() {
+  movingCar.position.z -= moving;
+}
+function onBottom() {
+  movingCar.position.z += moving;
 }

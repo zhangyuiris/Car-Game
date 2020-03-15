@@ -9,14 +9,61 @@ canvas {
 	margin:0 auto;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 760px) {
 	.controller {
 		position: fixed;
 		top: 70%;
 		left: 50%;
 		transform: translate(-50%,0);
-		width: 200px;
-		height: 200px;
-		background: rgba(255,255,255,0.2);
+		width: 220px;
+		height: 220px;
+		/*background: pink;*/
+	}
+	.direction {
+		position: absolute;
+		border-radius: 12px;
+		background: rgba(255,255,255,0.7);
+		width: 60px;
+		height: 60px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.triangle {
+		width: 0;
+		height: 0;
+		border: 20px solid transparent;
+	}
+	.top {
+		top: 5%;
+		left: 50%;
+		transform: translate(-50%,0);
+	}
+	.left {
+		top: 50%;
+		left: 5%;
+		transform: translate(0,-50%);
+	}
+	.right {
+		top: 50%;
+		right: 5%;
+		transform: translate(0,-50%);
+	}
+	.bottom {
+		bottom: 5%;
+		left: 50%;
+		transform: translate(-50%,0);
+	}
+	.top > .triangle {
+		border-bottom: 30px solid grey;
+	}
+	.bottom > .triangle {
+		border-top: 30px solid grey;
+	}
+	.left > .triangle {
+		border-right: 30px solid grey;
+	}
+	.right > .triangle {
+		border-left: 30px solid grey;
 	}
 }

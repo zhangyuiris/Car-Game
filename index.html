@@ -2,20 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no, viewport-fit=cover">
   <link href="index.css" rel="stylesheet"/>
   <title>🚇</title>
-  <style>
-  
-  </style>
 </head>
 <body>
   <div id="ThreeJS" style="z-index: 2;"></div>
   <div id="Stats-output"></div>
   <div class="controller">
-    <div class="left">ff</div>
-    <div class="right">ff</div>
-    <div class="top">ff</div>
-    <div class="bottom">ff</div>
+    <div class="direction left" id="left">
+      <div class="triangle"></div>
+    </div>
+    <div class="direction right" id="right">
+      <div class="triangle"></div>
+    </div>
+    <div class="direction top" id="top">
+      <div class="triangle"></div>
+    </div>
+    <div class="direction bottom" id="bottom">
+      <div class="triangle"></div>
+    </div>
   </div>
 </body>
 <script src="lib/stats.js"></script>
