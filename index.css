@@ -1,0 +1,22 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+canvas {
+	display: block;
+	margin:0 auto;
+}
+
+@media screen and (max-width: 1050px) {
+	.controller {
+		position: fixed;
+		top: 70%;
+		left: 50%;
+		transform: translate(-50%,0);
+		width: 200px;
+		height: 200px;
+		background: rgba(255,255,255,0.2);
+	}
+}

@@ -11,8 +11,7 @@ let id = 0;
 let score = 0;
 let crashId = " ";
 let lastCrashId = " ";
-let delta = clock.getDelta();
-let moveDistance = 200 * delta;
+
 
 init();
 animate();
@@ -84,6 +83,8 @@ function animate() {
 function update() {
   stats.update();
   controls.update();
+  let delta = clock.getDelta();
+  let moveDistance = 200 * delta;
   if (keyboard.pressed("left") || keyboard.pressed("A")) {
     if (movingCar.position.x > -270)
       movingCar.position.x -= moveDistance;

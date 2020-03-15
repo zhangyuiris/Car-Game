@@ -2,28 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link href="index.css" rel="stylesheet"/>
   <title>🚇</title>
   <style>
-    body {
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
-      margin:0 auto;
-    }
-    .fps {
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-    }
+  
   </style>
 </head>
 <body>
   <div id="ThreeJS" style="z-index: 2;"></div>
   <div id="Stats-output"></div>
+  <div class="controller">
+    <div class="left">ff</div>
+    <div class="right">ff</div>
+    <div class="top">ff</div>
+    <div class="bottom">ff</div>
+  </div>
 </body>
 <script src="lib/stats.js"></script>
 <script src="lib/three.min.js"></script>
