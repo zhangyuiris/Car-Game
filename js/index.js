@@ -13,11 +13,17 @@ let crashId = " ";
 let lastCrashId = " ";
 let moving = 10;
 
+let state = {
+  left: false,
+  right: false,
+  top: false,
+  bottom: false
+}
+
 let leftBtn = document.querySelector('#left');
 let rightBtn = document.querySelector('#right');
 let topBtn = document.querySelector('#top');
 let bottomBtn = document.querySelector('#bottom');
-
 
 
 init();
@@ -41,7 +47,7 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   
-  container = document.getElementById("ThreeJS");
+  container = document.getElementById("three");
   container.appendChild(renderer.domElement);
   
   controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -80,11 +86,24 @@ function init() {
   // window resize
   window.addEventListener('resize', onWindowResize);
   
-  leftBtn.addEventListener('click', onLeft);
-  rightBtn.addEventListener('click', onRight);
-  topBtn.addEventListener('click', onTop);
-  bottomBtn.addEventListener('click', onBottom);
+  leftBtn.addEventListener('touchstart', handleLeftStart);
+  leftBtn.addEventListener('touchend', handleLeftEnd);
+  rightBtn.addEventListener('touchstart', handleRightStart);
+  rightBtn.addEventListener('touchend', handleRightEnd);
+  topBtn.addEventListener('touchstart', handleTopStart);
+  topBtn.addEventListener('touchend', handleTopEnd);
+  bottomBtn.addEventListener('touchstart', handleBottomStart);
+  bottomBtn.addEventListener('touchend', handleBottomEnd);
 }
+
+function handleLeftStart() { state.left = true; }
+function handleLeftEnd() { state.left = false; }
+function handleRightStart() { state.right = true; }
+function handleRightEnd() { state.right = false; }
+function handleTopStart() { state.top = true; }
+function handleTopEnd() { state.top = false; }
+function handleBottomStart() { state.bottom = true; }
+function handleBottomEnd() { state.bottom = false; }
 
 function animate() {
   requestAnimationFrame(animate);
@@ -97,7 +116,7 @@ function update() {
   controls.update();
   let delta = clock.getDelta();
   let moveDistance = 200 * delta;
-  if (keyboard.pressed("left") || keyboard.pressed("A")) {
+  if (keyboard.pressed("left") || keyboard.pressed("A") || state.left) {
     if (movingCar.position.x > -270)
       movingCar.position.x -= moveDistance;
     if (camera.position.x > -150) {
@@ -107,7 +126,7 @@ function update() {
       }
     }
   }
-  if (keyboard.pressed("right") || keyboard.pressed("D")) {
+  if (keyboard.pressed("right") || keyboard.pressed("D") || state.right) {
     if (movingCar.position.x < 270)
       movingCar.position.x += moveDistance;
     if (camera.position.x < 150) {
@@ -117,10 +136,10 @@ function update() {
       }
     }
   }
-  if (keyboard.pressed("up") || keyboard.pressed("W")) {
+  if (keyboard.pressed("up") || keyboard.pressed("W") || state.top) {
     movingCar.position.z -= moveDistance;
   }
-  if (keyboard.pressed("down") || keyboard.pressed("S")) {
+  if (keyboard.pressed("down") || keyboard.pressed("S") || state.bottom) {
     movingCar.position.z += moveDistance;
   }
   // threejs的几何体默认情况下几何中心在场景中坐标是坐标原点。
@@ -364,7 +383,7 @@ function initStats() {
   stats.domElement.style.position = 'fixed';
   stats.domElement.style.left = '0px';
   stats.domElement.style.top = '0px';
-  document.getElementById("Stats-output").appendChild(stats.domElement);
+  document.getElementById("stats").appendChild(stats.domElement);
   return stats;
 }
 

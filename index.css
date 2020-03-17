@@ -12,19 +12,18 @@ canvas {
 @media screen and (max-width: 760px) {
 	.controller {
 		position: fixed;
-		top: 70%;
+		bottom: 40px;
 		left: 50%;
 		transform: translate(-50%,0);
-		width: 220px;
-		height: 220px;
-		/*background: pink;*/
+		width: 140px;
+		height: 140px;
 	}
 	.direction {
 		position: absolute;
 		border-radius: 12px;
 		background: rgba(255,255,255,0.7);
-		width: 60px;
-		height: 60px;
+		width: 40px;
+		height: 40px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -32,7 +31,7 @@ canvas {
 	.triangle {
 		width: 0;
 		height: 0;
-		border: 20px solid transparent;
+		border: 15px solid transparent;
 	}
 	.top {
 		top: 5%;
@@ -55,15 +54,15 @@ canvas {
 		transform: translate(-50%,0);
 	}
 	.top > .triangle {
-		border-bottom: 30px solid grey;
+		border-bottom: 20px solid grey;
 	}
 	.bottom > .triangle {
-		border-top: 30px solid grey;
+		border-top: 20px solid grey;
 	}
 	.left > .triangle {
-		border-right: 30px solid grey;
+		border-right: 20px solid grey;
 	}
 	.right > .triangle {
-		border-left: 30px solid grey;
+		border-left: 20px solid grey;
 	}
 }
