@@ -9,6 +9,13 @@ canvas {
 	margin:0 auto;
 }
 
+div {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 @media screen and (max-width: 760px) {
 	.controller {
 		position: fixed;
