@@ -11,7 +11,20 @@ let id = 0;
 let score = 0;
 let crashId = " ";
 let lastCrashId = " ";
-let moving = 10;
+let randomRate = 0.04;
+let randomCar = 30;
+let speed = 25;
+let randomColor = [
+  '#0091ea',
+  '#ffd600',
+  '#f8bbd0',
+  '#ffab00',
+  '#546e7a',
+  '#b388ff',
+  '#4db6ac',
+  '#c5cae9',
+  '#a1887f'
+]
 
 let state = {
   left: false,
@@ -24,7 +37,7 @@ let leftBtn = document.querySelector('#left');
 let rightBtn = document.querySelector('#right');
 let topBtn = document.querySelector('#top');
 let bottomBtn = document.querySelector('#bottom');
-
+let scoreDiv = document.querySelector('#score');
 
 init();
 animate();
@@ -34,7 +47,7 @@ function init() {
   scene = new THREE.Scene();
   // Camera
   camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 5000);
-  camera.position.set(0, 100, 400);
+  camera.position.set(0, 60, 200);
   
   // renderer
   renderer = new THREE.WebGLRenderer({
@@ -57,27 +70,59 @@ function init() {
     color: 0x222222,
     side: THREE.DoubleSide
   });
-  let floorGeometry = new THREE.PlaneGeometry(600, 10000, 10, 10);
+  let floorGeometry = new THREE.PlaneGeometry(500, 7000, 10, 10);
   let floor = new THREE.Mesh(floorGeometry, floorMaterial);
   floor.rotation.x = Math.PI / 2;
   scene.add(floor);
-
+  
+  // 加入分割线
+  let whiteMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+  
+  let whiteGeometry = new THREE.PlaneGeometry(8, 7000, 1, 1);
+  
+  let leftTwo = new THREE.Mesh(whiteGeometry, whiteMaterial);
+  let leftOne = leftTwo.clone();
+  let rightOne = leftTwo.clone();
+  let rightTwo = leftTwo.clone();
+  
+  leftTwo.rotation.x = Math.PI / 2;
+  leftOne.rotation.x = Math.PI / 2;
+  rightTwo.rotation.x = Math.PI / 2;
+  rightOne.rotation.x = Math.PI / 2;
+  
+  leftOne.position.x -= 40
+  leftTwo.position.x -= 130
+  rightOne.position.x += 40
+  rightTwo.position.x += 130
+  
+  scene.add(leftOne);
+  scene.add(leftTwo);
+  scene.add(rightOne);
+  scene.add(rightTwo);
+  
   // 光线
   let ambientLight = new THREE.AmbientLight(0xffffff);
   ambientLight.name = "Ambient Light";
   scene.add(ambientLight);
   
+  // 环境光
   let hemiLight = new THREE.HemisphereLight(0x0044ff, 0xffffff, 0.5);
   hemiLight.name = "Hemisphere Light";
   hemiLight.position.set(0,5,0);
   scene.add(hemiLight);
 
-  var cubeGeometry = new THREE.SphereGeometry(25, 10, 10);
-  var wireMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffe411
+  var cubeGeometry = new THREE.DodecahedronGeometry(20, 1);
+  var wireMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe5f2f2,
+    flatShading: true
   });
   movingCar = new THREE.Mesh(cubeGeometry, wireMaterial);
   movingCar.position.set(0, 25, 0);
+  movingCar.receiveShadow = true;
+  movingCar.castShadow = true;
   scene.add(movingCar);
   
   // stats
@@ -94,16 +139,9 @@ function init() {
   topBtn.addEventListener('touchend', handleTopEnd);
   bottomBtn.addEventListener('touchstart', handleBottomStart);
   bottomBtn.addEventListener('touchend', handleBottomEnd);
+  
+  scoreDiv.innerHTML = score;
 }
-
-function handleLeftStart() { state.left = true; }
-function handleLeftEnd() { state.left = false; }
-function handleRightStart() { state.right = true; }
-function handleRightEnd() { state.right = false; }
-function handleTopStart() { state.top = true; }
-function handleTopEnd() { state.top = false; }
-function handleBottomStart() { state.bottom = true; }
-function handleBottomEnd() { state.bottom = false; }
 
 function animate() {
   requestAnimationFrame(animate);
@@ -115,26 +153,27 @@ function update() {
   stats.update();
   controls.update();
   let delta = clock.getDelta();
+  movingCar.rotation.x -= 3 * Math.PI / 180;
   let moveDistance = 200 * delta;
   if (keyboard.pressed("left") || keyboard.pressed("A") || state.left) {
     if (movingCar.position.x > -270)
       movingCar.position.x -= moveDistance;
-    if (camera.position.x > -150) {
-      camera.position.x -= moveDistance * 0.6;
-      if (camera.rotation.z > -5 * Math.PI / 180) {
-        camera.rotation.z -= 0.2 * Math.PI / 180;
-      }
-    }
+    // if (camera.position.x > -150) {
+      // camera.position.x -= moveDistance * 0.6;
+      // if (camera.rotation.z > -5 * Math.PI / 180) {
+      //   camera.rotation.z -= 0.2 * Math.PI / 180;
+      // }
+    // }
   }
   if (keyboard.pressed("right") || keyboard.pressed("D") || state.right) {
     if (movingCar.position.x < 270)
       movingCar.position.x += moveDistance;
-    if (camera.position.x < 150) {
-      camera.position.x += moveDistance * 0.6;
-      if (camera.rotation.z < 5 * Math.PI / 180) {
-        camera.rotation.z += 0.2 * Math.PI / 180;
-      }
-    }
+    // if (camera.position.x < 150) {
+      // camera.position.x += moveDistance * 0.6;
+      // if (camera.rotation.z < 5 * Math.PI / 180) {
+      //   camera.rotation.z += 0.2 * Math.PI / 180;
+      // }
+    // }
   }
   if (keyboard.pressed("up") || keyboard.pressed("W") || state.top) {
     movingCar.position.z -= moveDistance;
@@ -188,16 +227,20 @@ function update() {
   // 这也就是说该模型几何体的顶点数量阅读
   // 计算量越大。
   if (crash) {
-    movingCar.material.color.setHex(0x346386);
+    movingCar.material.color.setHex(0xe91e63);
     console.log("Crash");
     if (crashId !== lastCrashId) {
-      score -= 100;
+      if (score > 100) {
+        score -= 100;
+      } else {
+        score = 0;
+      }
       lastCrashId = crashId;
     }
   } else {
-    movingCar.material.color.setHex(0xffe411);
+    movingCar.material.color.setHex(0xe5f2f2);
   }
-  if (Math.random() < 0.03 && obstacles.length < 30) {
+  if (Math.random() < randomRate && obstacles.length < randomCar) {
     makeRandomCar();
   }
   for (i = 0; i < obstacles.length; i++) {
@@ -205,23 +248,26 @@ function update() {
       scene.remove(obstacles[i]);
       obstacles.splice(i, 1);
       collisionList.splice(i, 1);
+      score += 10;
     } else {
-      obstacles[i].position.z += 10;
+      obstacles[i].position.z += speed;
     }
   }
+  scoreDiv.innerHTML = score;
 }
 
 function makeRandomCar() {
-  let color = getRandomInt(0x171717, 0xcccccc);
+  let index = getRandomInt(0, 9);
+  let color = randomColor[index];
   let name = "car_" + id;
   id++;
   // mess 初始化
   let mess = new THREE.Object3D();
   mess.name = name;
   // trunk 初始化 position
-  let a = getRandomInt(-4, 4) * 50;
+  let a = getRandomInt(-2, 2) * 80;
   let b = 30;
-  let c = getRandomArbitrary(-800, -1200);
+  let c = getRandomArbitrary(-15, -20) * 100;
   mess.position.set(a, b, c);
   scene.add(mess);
   obstacles.push(mess);
@@ -407,33 +453,11 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function onLeft() {
-  let delta = clock.getDelta();
-  let moveDistance = 200 * delta;
-  if (movingCar.position.x > -270)
-    movingCar.position.x -= moveDistance;
-  if (camera.position.x > -150) {
-    camera.position.x -= moveDistance * 0.6;
-    if (camera.rotation.z > -5 * Math.PI / 180) {
-      camera.rotation.z -= 0.2 * Math.PI / 180;
-    }
-  }
-}
-function onRight() {
-  let delta = clock.getDelta();
-  let moveDistance = 200 * delta;
-  if (movingCar.position.x < 270)
-    movingCar.position.x += moveDistance;
-  if (camera.position.x < 150) {
-    camera.position.x += moveDistance * 0.6;
-    if (camera.rotation.z < 5 * Math.PI / 180) {
-      camera.rotation.z += 0.2 * Math.PI / 180;
-    }
-  }
-}
-function onTop() {
-  movingCar.position.z -= moving;
-}
-function onBottom() {
-  movingCar.position.z += moving;
-}
+function handleLeftStart() { state.left = true; }
+function handleLeftEnd() { state.left = false; }
+function handleRightStart() { state.right = true; }
+function handleRightEnd() { state.right = false; }
+function handleTopStart() { state.top = true; }
+function handleTopEnd() { state.top = false; }
+function handleBottomStart() { state.bottom = true; }
+function handleBottomEnd() { state.bottom = false; }

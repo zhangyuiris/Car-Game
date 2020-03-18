@@ -7,6 +7,8 @@
 
 // # class CSG
 
+
+// 对 CGS.js 进行了下封装
 class CSG {
     constructor() {
         this.polygons = [];

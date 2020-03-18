@@ -73,3 +73,13 @@ div {
 		border-left: 20px solid grey;
 	}
 }
+
+#score {
+	position: fixed;
+	left: 80px;
+	top: 0;
+	color: black;
+	font-size: 24px;
+	font-weight: 600;
+	padding: 10px 20px;
+}
