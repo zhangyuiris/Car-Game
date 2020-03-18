@@ -76,32 +76,31 @@ function init() {
   scene.add(floor);
   
   // 加入分割线
-  let whiteMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    side: THREE.DoubleSide
-  });
-  
-  let whiteGeometry = new THREE.PlaneGeometry(8, 7000, 1, 1);
-  
-  let leftTwo = new THREE.Mesh(whiteGeometry, whiteMaterial);
-  let leftOne = leftTwo.clone();
-  let rightOne = leftTwo.clone();
-  let rightTwo = leftTwo.clone();
-  
-  leftTwo.rotation.x = Math.PI / 2;
-  leftOne.rotation.x = Math.PI / 2;
-  rightTwo.rotation.x = Math.PI / 2;
-  rightOne.rotation.x = Math.PI / 2;
-  
-  leftOne.position.x -= 40
-  leftTwo.position.x -= 130
-  rightOne.position.x += 40
-  rightTwo.position.x += 130
-  
-  scene.add(leftOne);
-  scene.add(leftTwo);
-  scene.add(rightOne);
-  scene.add(rightTwo);
+  // let whiteMaterial = new THREE.MeshBasicMaterial({
+  //   color: 0xffffff
+  // });
+  //
+  // let whiteGeometry = new THREE.PlaneGeometry(8, 7000, 1, 1);
+  //
+  // let leftTwo = new THREE.Mesh(whiteGeometry, whiteMaterial);
+  // let leftOne = leftTwo.clone();
+  // let rightOne = leftTwo.clone();
+  // let rightTwo = leftTwo.clone();
+  //
+  // leftTwo.rotation.x = Math.PI / 2;
+  // leftOne.rotation.x = Math.PI / 2;
+  // rightTwo.rotation.x = Math.PI / 2;
+  // rightOne.rotation.x = Math.PI / 2;
+  //
+  // leftOne.position.x -= 40
+  // leftTwo.position.x -= 130
+  // rightOne.position.x += 40
+  // rightTwo.position.x += 130
+  //
+  // scene.add(leftOne);
+  // scene.add(leftTwo);
+  // scene.add(rightOne);
+  // scene.add(rightTwo);
   
   // 光线
   let ambientLight = new THREE.AmbientLight(0xffffff);
