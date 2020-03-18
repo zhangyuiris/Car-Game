@@ -76,11 +76,11 @@ function init() {
   floor.position.z = 2000;
   scene.add(floor);
   
-  let floorTwoGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
-  let floorTwo = new THREE.Mesh(floorTwoGeometry, floorMaterial);
-  floorTwo.position.y = -500;
-  floorTwo.position.z = 50;
-  scene.add(floorTwo);
+  // let floorTwoGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+  // let floorTwo = new THREE.Mesh(floorTwoGeometry, floorMaterial);
+  // floorTwo.position.y = -500;
+  // floorTwo.position.z = 50;
+  // scene.add(floorTwo);
   // 加入分割线
   // let whiteMaterial = new THREE.MeshBasicMaterial({
   //   color: 0xffffff
