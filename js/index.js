@@ -70,9 +70,10 @@ function init() {
     color: 0x222222,
     side: THREE.DoubleSide
   });
-  let floorGeometry = new THREE.PlaneGeometry(500, 7000, 10, 10);
+  let floorGeometry = new THREE.PlaneGeometry(500, 11000, 10, 10);
   let floor = new THREE.Mesh(floorGeometry, floorMaterial);
   floor.rotation.x = Math.PI / 2;
+  floor.position.z = 2000;
   scene.add(floor);
   
   // 加入分割线
