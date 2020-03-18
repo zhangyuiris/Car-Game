@@ -47,7 +47,7 @@ function init() {
   scene = new THREE.Scene();
   // Camera
   camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 5000);
-  camera.position.set(0, 250, 500);
+  camera.position.set(0, 100, 400);
   
   // renderer
   renderer = new THREE.WebGLRenderer({
@@ -111,7 +111,7 @@ function init() {
   // 环境光
   let hemiLight = new THREE.HemisphereLight(0x0044ff, 0xffffff, 0.5);
   hemiLight.name = "Hemisphere Light";
-  hemiLight.position.set(0,5,0);
+  hemiLight.position.set(0, 5, 200);
   scene.add(hemiLight);
 
   var cubeGeometry = new THREE.DodecahedronGeometry(20, 1);
