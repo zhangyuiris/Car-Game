@@ -7,7 +7,9 @@
   <title>🚇</title>
 </head>
 <body>
-  <div id="three" style="z-index: 2;"></div>
+  <div style="z-index: 2;width:100vw;height: 100vh">
+    <canvas id="three" width="100vw" height="100vh"></canvas>
+  </div>
   <div id="stats"></div>
   <div id="score"></div>
   <div class="controller" id="state">
@@ -30,5 +32,6 @@
 <script src="lib/OrbitControls.js"></script>
 <script src="lib/THREEx.KeyboardState.js"></script>
 <script src="js/CSG.js"></script>
+<script src="https://unpkg.com/peerjs@1.0.0/dist/peerjs.min.js"></script>
 <script src="js/index.js"></script>
 </html>

@@ -39,6 +39,32 @@ let topBtn = document.querySelector('#top');
 let bottomBtn = document.querySelector('#bottom');
 let scoreDiv = document.querySelector('#score');
 
+var peer = new Peer('zhangyuwei', {
+  host: '127.0.0.1',
+  port: 9000,
+  path: '/'
+});
+// on open will be launch when you successfully connect to PeerServer
+peer.on('open', function(id) {
+  console.log('My peer ID is: ' + id);
+});
+
+peer.on('connection', function(conn) {
+  console.log('coon', conn)
+});
+
+var conn = peer.connect('zhangyuwei2');
+conn.on('open', function() {
+  // Receive messages
+  conn.on('data', function(data) {
+    console.log('Received', data);
+  });
+
+  // Send messages
+  conn.send('Hello!zhangyuwei2');
+});
+
+
 init();
 animate();
 
@@ -52,23 +78,21 @@ function init() {
   // renderer
   renderer = new THREE.WebGLRenderer({
     antialias: true,
-    logarithmicDepthBuffer: true
+    logarithmicDepthBuffer: true,
+    canvas: document.getElementById("three")
   });
   
   // 天的颜色
   renderer.setClearColor(new THREE.Color(0x69c6d0));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  
-  container = document.getElementById("three");
-  container.appendChild(renderer.domElement);
-  
+
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   
   // 加入地面
   let floorMaterial = new THREE.MeshBasicMaterial({
     color: 0x222222,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
   });
   let floorGeometry = new THREE.PlaneGeometry(500, 11000, 10, 10);
   let floor = new THREE.Mesh(floorGeometry, floorMaterial);
