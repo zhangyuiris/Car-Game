@@ -38,31 +38,31 @@ let rightBtn = document.querySelector('#right');
 let topBtn = document.querySelector('#top');
 let bottomBtn = document.querySelector('#bottom');
 let scoreDiv = document.querySelector('#score');
-
-var peer = new Peer('zhangyuwei', {
-  host: '127.0.0.1',
-  port: 9000,
-  path: '/'
-});
-// on open will be launch when you successfully connect to PeerServer
-peer.on('open', function(id) {
-  console.log('My peer ID is: ' + id);
-});
-
-peer.on('connection', function(conn) {
-  console.log('coon', conn)
-});
-
-var conn = peer.connect('zhangyuwei2');
-conn.on('open', function() {
-  // Receive messages
-  conn.on('data', function(data) {
-    console.log('Received', data);
-  });
-
-  // Send messages
-  conn.send('Hello!zhangyuwei2');
-});
+//
+// var peer = new Peer('zhangyuwei', {
+//   host: '127.0.0.1',
+//   port: 9000,
+//   path: '/'
+// });
+// // on open will be launch when you successfully connect to PeerServer
+// peer.on('open', function(id) {
+//   console.log('My peer ID is: ' + id);
+// });
+//
+// peer.on('connection', function(conn) {
+//   console.log('coon', conn)
+// });
+//
+// var conn = peer.connect('zhangyuwei2');
+// conn.on('open', function() {
+//   // Receive messages
+//   conn.on('data', function(data) {
+//     console.log('Received', data);
+//   });
+//
+//   // Send messages
+//   conn.send('Hello!zhangyuwei2');
+// });
 
 
 init();
@@ -100,37 +100,40 @@ function init() {
   floor.position.z = 2000;
   scene.add(floor);
   
-  // let floorTwoGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
-  // let floorTwo = new THREE.Mesh(floorTwoGeometry, floorMaterial);
-  // floorTwo.position.y = -500;
-  // floorTwo.position.z = 50;
-  // scene.add(floorTwo);
   // 加入分割线
-  // let whiteMaterial = new THREE.MeshBasicMaterial({
-  //   color: 0xffffff
-  // });
-  //
-  // let whiteGeometry = new THREE.PlaneGeometry(8, 7000, 1, 1);
-  //
-  // let leftTwo = new THREE.Mesh(whiteGeometry, whiteMaterial);
-  // let leftOne = leftTwo.clone();
-  // let rightOne = leftTwo.clone();
-  // let rightTwo = leftTwo.clone();
-  //
-  // leftTwo.rotation.x = Math.PI / 2;
-  // leftOne.rotation.x = Math.PI / 2;
-  // rightTwo.rotation.x = Math.PI / 2;
-  // rightOne.rotation.x = Math.PI / 2;
-  //
-  // leftOne.position.x -= 40
-  // leftTwo.position.x -= 130
-  // rightOne.position.x += 40
-  // rightTwo.position.x += 130
-  //
-  // scene.add(leftOne);
-  // scene.add(leftTwo);
-  // scene.add(rightOne);
-  // scene.add(rightTwo);
+  let whiteMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide
+  });
+
+  let whiteGeometry = new THREE.PlaneGeometry(8, 7000, 1, 1);
+
+  let leftOne = new THREE.Mesh(whiteGeometry, whiteMaterial);
+  let rightOne = leftOne.clone();
+
+  leftOne.rotation.x = Math.PI / 2;
+  rightOne.rotation.x = Math.PI / 2;
+
+  leftOne.position.x -= 250;
+  rightOne.position.x += 250;
+
+  scene.add(leftOne);
+  scene.add(rightOne);
+  
+  // 草地
+  let grassGeomery = new THREE.PlaneBufferGeometry(6000, 7000);
+  let grassMaterial = new THREE.MeshLambertMaterial({
+    color: 0x689f38
+  });
+  let grass = new THREE.Mesh(grassGeomery,grassMaterial);
+  
+  grass.name = "Grass";
+  grass.rotation.x = -Math.PI/2;
+  grass.position.set(0, -0.05, -1);
+  scene.add(grass);
+  
+  // 雾
+  scene.fog = new THREE.Fog(0x69c6d0, 1000, 3000);
   
   // 光线
   let ambientLight = new THREE.AmbientLight(0xffffff);
