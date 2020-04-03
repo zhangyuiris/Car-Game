@@ -187,18 +187,17 @@ function init() {
   }
   
   for (let i = 0; i < 8; i++) {
-    let c = new Cloud();
+    let cloud = new Cloud();
     // this is the distance between the center of the axis and the cloud itself
     let po = getRandomInt(5, 7);
     let hi = getRandomInt(-6, -4);
-    let xi = getRandomInt(-4, 4);
-    c.mesh.position.y = po * 20;
-    c.mesh.position.x = xi * 250;
-    c.mesh.position.z = hi * 200;
+    cloud.mesh.position.y = po * 20;
+    cloud.mesh.position.x = -700 + i * 200;
+    cloud.mesh.position.z = hi * 200;
     // random scale
-    let s = 1 + Math.random() * 2;
-    c.mesh.scale.set(s,s,s);
-    scene.add(c.mesh);
+    let scale = 1 + Math.random() * 2;
+    cloud.mesh.scale.set(scale,scale,scale);
+    scene.add(cloud.mesh);
   }
   
   // stats
