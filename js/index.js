@@ -146,8 +146,8 @@ function init() {
   hemiLight.position.set(0, 5, 200);
   scene.add(hemiLight);
 
-  var cubeGeometry = new THREE.DodecahedronGeometry(20, 1);
-  var wireMaterial = new THREE.MeshStandardMaterial({
+  let cubeGeometry = new THREE.DodecahedronGeometry(20, 1);
+  let wireMaterial = new THREE.MeshStandardMaterial({
     color: 0xe5f2f2,
     flatShading: true
   });
@@ -156,6 +156,50 @@ function init() {
   movingCar.receiveShadow = true;
   movingCar.castShadow = true;
   scene.add(movingCar);
+  
+  // 云
+  let Cloud = function () {
+    // Create an empty container for the cloud
+    this.mesh = new THREE.Object3D();
+    // Cube geometry and material
+    var geom = new THREE.DodecahedronGeometry(20,0);
+    let mat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      flatShading: true
+    });
+    let nBlocs = 3+Math.floor(Math.random()*3);
+    
+    for (var i=0; i<nBlocs; i++ ){
+      //Clone mesh geometry
+      var m = new THREE.Mesh(geom, mat);
+      //Randomly position each cube
+      m.position.x = i*15;
+      m.position.y = Math.random()*10;
+      m.position.z = Math.random()*10;
+      m.rotation.z = Math.random()*Math.PI*2;
+      m.rotation.y = Math.random()*Math.PI*2;
+      
+      //Randomly scale the cubes
+      var s = .1 + Math.random()*.9;
+      m.scale.set(s,s,s);
+      this.mesh.add(m);
+    }
+  }
+  
+  for (let i = 0; i < 8; i++) {
+    let c = new Cloud();
+    // this is the distance between the center of the axis and the cloud itself
+    let po = getRandomInt(5, 7);
+    let hi = getRandomInt(-6, -4);
+    let xi = getRandomInt(-4, 4);
+    c.mesh.position.y = po * 20;
+    c.mesh.position.x = xi * 250;
+    c.mesh.position.z = hi * 200;
+    // random scale
+    let s = 1 + Math.random() * 2;
+    c.mesh.scale.set(s,s,s);
+    scene.add(c.mesh);
+  }
   
   // stats
   stats = initStats();
